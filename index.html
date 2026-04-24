@@ -506,7 +506,6 @@
     .contacto-input::placeholder { color: rgba(255,255,255,0.2); }
     .contacto-input:focus { background: #222; }
     .contacto-input.full { grid-column: span 2; }
-    .contacto-form.is-hidden { display: none; }
     .contacto-submit {
       width: 100%; margin-top: 1px;
       background: var(--rojo);
@@ -517,27 +516,7 @@
       cursor: pointer; transition: background 0.3s;
     }
     .contacto-submit:hover { background: var(--rojo-oscuro); }
-    .contacto-success {
-      display: none;
-      margin-bottom: 1px;
-      padding: 2rem;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.06);
-      text-align: left;
-    }
-    .contacto-success.is-visible { display: block; }
-    .contacto-success-title {
-      color: var(--blanco);
-      font-size: 0.9rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      margin-bottom: 0.7rem;
-    }
-    .contacto-success-text {
-      color: var(--gris-claro);
-      font-size: 0.92rem;
-      line-height: 1.8;
-    }
+
     /* ---- FOOTER ---- */
     footer {
       background: var(--negro);
@@ -946,7 +925,7 @@
       <p class="contacto-text">
         Leave us your details and we'll get back to you shortly. No commitment, no pressure.<br>That's how we work at Automotores Martino.
       </p>
-      <form class="contacto-form" name="contacto" method="POST" action="/#contact-success" data-netlify="true">
+      <form class="contacto-form" name="contacto" method="POST" action="/gracias.html" data-netlify="true">
         <input type="hidden" name="form-name" value="contacto" />
         <input class="contacto-input" type="text" name="name" placeholder="Your name" required />
         <input class="contacto-input" type="tel" name="phone" placeholder="Your phone" required />
@@ -954,10 +933,6 @@
         <input class="contacto-input full" type="text" name="interest" placeholder="Which car are you interested in?" required />
         <button class="contacto-submit full" type="submit">Send Inquiry →</button>
       </form>
-      <div class="contacto-success" id="contacto-success">
-        <div class="contacto-success-title">Inquiry received</div>
-        <p class="contacto-success-text">Thanks for reaching out. Your message was sent successfully and Automotores Martino will contact you shortly.</p>
-      </div>
       <a href="mailto:automotoresmartino@gmail.com" class="contacto-email-link">
         <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;flex-shrink:0"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
         automotoresmartino@gmail.com
@@ -1020,14 +995,6 @@
       });
     }, { threshold: 0.12 });
     reveals.forEach(r => observer.observe(r));
-
-    // Show Netlify success state on the same page after redirect
-    const contactForm = document.querySelector('.contacto-form');
-    const contactSuccess = document.getElementById('contacto-success');
-    if (contactForm && contactSuccess && window.location.hash === '#contact-success') {
-      contactForm.classList.add('is-hidden');
-      contactSuccess.classList.add('is-visible');
-    }
 
     // Scroll to contact
     function scrollToContact() {
