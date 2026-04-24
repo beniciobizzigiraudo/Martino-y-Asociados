@@ -946,7 +946,7 @@
       <p class="contacto-text">
         Leave us your details and we'll get back to you shortly. No commitment, no pressure.<br>That's how we work at Automotores Martino.
       </p>
-      <form class="contacto-form" name="contacto" method="POST" action="/?submitted=true#contacto" data-netlify="true">
+      <form class="contacto-form" name="contacto" method="POST" action="/#contact-success" data-netlify="true">
         <input type="hidden" name="form-name" value="contacto" />
         <input class="contacto-input" type="text" name="name" placeholder="Your name" required />
         <input class="contacto-input" type="tel" name="phone" placeholder="Your phone" required />
@@ -1024,12 +1024,9 @@
     // Show Netlify success state on the same page after redirect
     const contactForm = document.querySelector('.contacto-form');
     const contactSuccess = document.getElementById('contacto-success');
-    const currentUrl = new URL(window.location.href);
-    if (contactForm && contactSuccess && currentUrl.searchParams.get('submitted') === 'true') {
+    if (contactForm && contactSuccess && window.location.hash === '#contact-success') {
       contactForm.classList.add('is-hidden');
       contactSuccess.classList.add('is-visible');
-      currentUrl.searchParams.delete('submitted');
-      window.history.replaceState({}, '', currentUrl.pathname + currentUrl.hash);
     }
 
     // Scroll to contact
