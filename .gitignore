@@ -1,3 +1,4 @@
 .netlify
 automotores-martino (*.html)
 automotores-martino*.html
+!automotores-martino (asis virtual - ia real).html

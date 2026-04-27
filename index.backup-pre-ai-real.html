@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -506,6 +506,7 @@
     .contacto-input::placeholder { color: rgba(255,255,255,0.2); }
     .contacto-input:focus { background: #222; }
     .contacto-input.full { grid-column: span 2; }
+    .contacto-form.is-hidden { display: none; }
     .contacto-submit {
       width: 100%; margin-top: 1px;
       background: var(--rojo);
@@ -516,6 +517,35 @@
       cursor: pointer; transition: background 0.3s;
     }
     .contacto-submit:hover { background: var(--rojo-oscuro); }
+    .contacto-success {
+      display: none;
+      margin-bottom: 1px;
+      padding: 2rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.06);
+      text-align: left;
+    }
+    .contacto-success.is-visible { display: block; }
+    .contacto-success-title {
+      color: var(--blanco);
+      font-size: 0.9rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+    }
+    .contacto-success-text {
+      color: var(--gris-claro);
+      font-size: 0.92rem;
+      line-height: 1.8;
+    }
+    .contacto-error {
+      display: none;
+      margin-top: 1rem;
+      color: #ffb3b8;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+    }
+    .contacto-error.is-visible { display: block; }
 
     /* ---- FOOTER ---- */
     footer {
@@ -590,292 +620,6 @@
       .confianza-bar { padding: 2rem; }
       .hero-title { font-size: clamp(3.5rem, 18vw, 6rem); }
     }
-
-    /* ---- REPUESTOS ---- */
-    .repuestos-section {
-      padding: 8rem 4rem;
-      background: var(--negro-medio);
-      border-top: 1px solid rgba(255,255,255,0.05);
-    }
-    .repuestos-inner { max-width: 1400px; margin: 0 auto; }
-
-    .repuestos-filters {
-      display: flex; gap: 1rem; flex-wrap: wrap;
-      margin-bottom: 1rem; margin-top: 2.5rem;
-    }
-    .filter-group { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; min-width: 200px; }
-    .filter-label {
-      font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
-      color: var(--rojo); font-weight: 600;
-    }
-    .filter-select {
-      background: var(--negro-suave);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: var(--blanco);
-      padding: 0.85rem 1.2rem;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.8rem;
-      outline: none;
-      cursor: pointer;
-      transition: border-color 0.3s;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C0000A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 1rem center;
-      padding-right: 2.5rem;
-    }
-    .filter-select:focus { border-color: var(--rojo); }
-    .filter-select option { background: #1a1a1a; }
-
-    .filter-btn {
-      background: var(--rojo); border: none; color: var(--blanco);
-      padding: 0.85rem 2rem;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
-      cursor: pointer; align-self: flex-end;
-      transition: background 0.3s;
-      white-space: nowrap;
-    }
-    .filter-btn:hover { background: var(--rojo-oscuro); }
-
-    .repuestos-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      margin-top: 3rem;
-      background: rgba(255,255,255,0.04);
-    }
-    .repuesto-card {
-      background: var(--negro);
-      padding: 1.8rem;
-      border: 1px solid rgba(255,255,255,0.04);
-      transition: border-color 0.3s, background 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-    .repuesto-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0;
-      width: 3px; height: 0;
-      background: var(--rojo);
-      transition: height 0.3s ease;
-    }
-    .repuesto-card:hover::before { height: 100%; }
-    .repuesto-card:hover { background: var(--negro-suave); border-color: rgba(192,0,10,0.3); }
-
-    .repuesto-icon {
-      font-size: 2rem; margin-bottom: 1.2rem; display: block;
-      filter: grayscale(1); transition: filter 0.3s;
-    }
-    .repuesto-card:hover .repuesto-icon { filter: grayscale(0); }
-
-    .repuesto-category {
-      font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase;
-      color: var(--rojo); margin-bottom: 0.5rem; font-weight: 600;
-    }
-    .repuesto-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.35rem; color: var(--blanco); letter-spacing: 0.03em;
-      line-height: 1.1; margin-bottom: 0.5rem;
-    }
-    .repuesto-compat {
-      font-size: 0.68rem; color: var(--gris-claro); margin-bottom: 1.2rem;
-      line-height: 1.5;
-    }
-    .repuesto-compat strong { color: rgba(255,255,255,0.6); font-weight: 500; }
-    .repuesto-footer {
-      display: flex; justify-content: space-between; align-items: center;
-      padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.06);
-      margin-top: 1rem;
-    }
-    .repuesto-price {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem; color: var(--blanco);
-    }
-    .repuesto-price-label {
-      font-size: 0.55rem; color: var(--rojo); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.1rem;
-    }
-    .repuesto-stock {
-      font-size: 0.62rem; color: #5cba7d; font-weight: 600;
-      letter-spacing: 0.1em; text-transform: uppercase;
-    }
-    .repuesto-stock.low { color: #e8a020; }
-    .repuesto-btn {
-      display: block; width: 100%; margin-top: 1rem;
-      background: transparent; border: 1px solid rgba(192,0,10,0.4);
-      color: var(--rojo); padding: 0.6rem;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600;
-      cursor: pointer; transition: background 0.3s, color 0.3s;
-    }
-    .repuesto-btn:hover { background: var(--rojo); color: var(--blanco); }
-
-    .no-results {
-      grid-column: 1/-1; text-align: center;
-      padding: 4rem; color: var(--gris-claro);
-      font-size: 0.85rem; letter-spacing: 0.1em;
-      display: none;
-    }
-
-    @media (max-width: 900px) {
-      .repuestos-section { padding: 5rem 2rem; }
-      .repuestos-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 560px) {
-      .repuestos-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ---- CHAT WIDGET ---- */
-    #chat-widget {
-      position: fixed; bottom: 2rem; right: 2rem; z-index: 1000;
-      display: flex; flex-direction: column; align-items: flex-end; gap: 1rem;
-    }
-    #chat-box {
-      width: 360px;
-      background: var(--negro-medio);
-      border: 1px solid rgba(192,0,10,0.35);
-      display: flex; flex-direction: column;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-      transition: all 0.35s cubic-bezier(.4,0,.2,1);
-      max-height: 520px;
-      overflow: hidden;
-    }
-    #chat-box.hidden { max-height: 0; opacity: 0; pointer-events: none; transform: translateY(20px); border: none; }
-    #chat-header {
-      background: var(--rojo);
-      padding: 1rem 1.3rem;
-      display: flex; justify-content: space-between; align-items: center;
-      flex-shrink: 0;
-    }
-    .chat-header-left { display: flex; align-items: center; gap: 0.75rem; }
-    .chat-avatar {
-      width: 36px; height: 36px; border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem;
-    }
-    .chat-header-info { }
-    .chat-header-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1rem; letter-spacing: 0.06em; color: var(--blanco);
-    }
-    .chat-header-status {
-      font-size: 0.6rem; color: rgba(255,255,255,0.75);
-      letter-spacing: 0.1em; display: flex; align-items: center; gap: 0.3rem;
-    }
-    .status-dot {
-      width: 6px; height: 6px; border-radius: 50%; background: #7fff7f;
-      animation: pulse-dot 1.5s infinite;
-    }
-    @keyframes pulse-dot {
-      0%,100% { opacity:1; } 50% { opacity:0.4; }
-    }
-    .chat-close {
-      background: none; border: none; color: rgba(255,255,255,0.7);
-      font-size: 1.2rem; cursor: pointer; line-height: 1; padding: 0;
-      transition: color 0.2s;
-    }
-    .chat-close:hover { color: var(--blanco); }
-    #chat-messages {
-      flex: 1; overflow-y: auto; padding: 1.2rem;
-      display: flex; flex-direction: column; gap: 0.9rem;
-      min-height: 300px; max-height: 340px;
-      scrollbar-width: thin; scrollbar-color: rgba(192,0,10,0.3) transparent;
-    }
-    .msg {
-      max-width: 85%; display: flex; flex-direction: column; gap: 0.25rem;
-    }
-    .msg.bot { align-self: flex-start; }
-    .msg.user { align-self: flex-end; }
-    .msg-bubble {
-      padding: 0.75rem 1rem;
-      font-size: 0.78rem; line-height: 1.55; font-family: 'Montserrat', sans-serif;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-    .msg.bot .msg-bubble {
-      background: var(--negro-suave);
-      border: 1px solid rgba(255,255,255,0.07);
-      color: var(--blanco);
-      border-radius: 0 8px 8px 8px;
-    }
-    .msg.user .msg-bubble {
-      background: var(--rojo);
-      color: var(--blanco);
-      border-radius: 8px 0 8px 8px;
-    }
-    .msg-time {
-      font-size: 0.58rem; color: var(--gris-claro); letter-spacing: 0.08em;
-    }
-    .msg.user .msg-time { text-align: right; }
-    .typing-indicator {
-      display: flex; gap: 4px; align-items: center; padding: 0.75rem 1rem;
-      background: var(--negro-suave); border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 0 8px 8px 8px; width: fit-content;
-    }
-    .typing-indicator span {
-      width: 6px; height: 6px; border-radius: 50%; background: var(--rojo);
-      animation: typing-bounce 1.2s infinite;
-    }
-    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes typing-bounce {
-      0%,60%,100% { transform: translateY(0); opacity:0.4; }
-      30% { transform: translateY(-5px); opacity:1; }
-    }
-    #chat-input-area {
-      display: flex; gap: 0; border-top: 1px solid rgba(255,255,255,0.07); flex-shrink: 0;
-    }
-    #chat-input {
-      flex: 1; background: var(--negro-suave); border: none; outline: none;
-      color: var(--blanco); padding: 1rem 1.2rem;
-      font-family: 'Montserrat', sans-serif; font-size: 0.78rem;
-    }
-    #chat-input::placeholder { color: rgba(255,255,255,0.25); }
-    #chat-send {
-      background: var(--rojo); border: none; color: var(--blanco);
-      padding: 0 1.3rem; cursor: pointer; font-size: 1rem;
-      transition: background 0.2s;
-    }
-    #chat-send:hover { background: var(--rojo-oscuro); }
-    #chat-send:disabled,
-    #chat-input:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
-    }
-    #chat-toggle {
-      width: 58px; height: 58px;
-      background: var(--rojo);
-      border: none; border-radius: 50%; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; box-shadow: 0 6px 24px rgba(192,0,10,0.5);
-      transition: transform 0.3s, background 0.3s;
-      flex-shrink: 0;
-    }
-    #chat-toggle:hover { transform: scale(1.1); background: var(--rojo-oscuro); }
-    .chat-suggestions {
-      display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0.7rem 1rem;
-      border-top: 1px solid rgba(255,255,255,0.05);
-    }
-    .chat-suggestion {
-      background: transparent; border: 1px solid rgba(192,0,10,0.35);
-      color: var(--rojo); padding: 0.35rem 0.75rem;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.62rem; letter-spacing: 0.08em; cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-    }
-    .chat-suggestion:hover { background: var(--rojo); color: var(--blanco); }
-    .chat-note {
-      padding: 0.7rem 1rem 0;
-      font-size: 0.62rem;
-      letter-spacing: 0.06em;
-      color: rgba(255,255,255,0.45);
-      text-transform: uppercase;
-    }
-    @media (max-width: 420px) {
-      #chat-box { width: calc(100vw - 2rem); }
-      #chat-widget { right: 1rem; bottom: 1rem; }
-    }
   </style>
 </head>
 <body>
@@ -888,7 +632,6 @@
     <div class="nav-logo">AUTOMOTORES <span>MARTINO</span></div>
     <ul class="nav-links">
       <li><a href="#nosotros">About Us</a></li>
-      <li><a href="#repuestos">Parts</a></li>
       <li><a href="#stock">Stock</a></li>
       <li><a href="#contacto">Contact</a></li>
       <li><a href="#contacto" class="nav-cta">Inquire</a></li>
@@ -998,7 +741,7 @@
         <p class="section-label">Our Stock</p>
         <h2 class="section-title">VEHICLES<br>AVAILABLE</h2>
       </div>
-      <p class="section-sub">Todos los precios son finales, sin costos ocultos. Financing All prices are final, no hidden costs. Financing available on all models.</p>
+      <p class="section-sub">All prices are final, no hidden costs. Financing available on all models.</p>
     </div>
 
     <div class="autos-grid">
@@ -1204,236 +947,6 @@
     </div>
   </section>
 
-
-  <!-- REPUESTOS -->
-  <section class="repuestos-section" id="repuestos">
-    <div class="repuestos-inner">
-      <div class="section-header reveal">
-        <div>
-          <p class="section-label">Parts &amp; Accessories</p>
-          <h2 class="section-title">SPARE<br>PARTS</h2>
-        </div>
-        <p class="section-sub">Genuine and compatible parts for the most popular models. Fast delivery and guaranteed quality.</p>
-      </div>
-
-      <!-- FILTROS -->
-      <div class="repuestos-filters reveal">
-        <div class="filter-group">
-          <span class="filter-label">Filter by Model</span>
-          <select class="filter-select" id="filter-model" onchange="filterParts()">
-            <option value="all">All Models</option>
-            <option value="vento">Volkswagen Vento</option>
-            <option value="corolla">Toyota Corolla</option>
-            <option value="cruze">Chevrolet Cruze</option>
-            <option value="ranger">Ford Ranger</option>
-            <option value="duster">Renault Duster</option>
-            <option value="208">Peugeot 208</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <span class="filter-label">Filter by Category</span>
-          <select class="filter-select" id="filter-cat" onchange="filterParts()">
-            <option value="all">All Categories</option>
-            <option value="engine">Engine</option>
-            <option value="wheels">Wheels &amp; Tires</option>
-            <option value="brakes">Brakes</option>
-            <option value="suspension">Suspension</option>
-            <option value="electrical">Electrical</option>
-            <option value="filters">Filters</option>
-          </select>
-        </div>
-        <button class="filter-btn" onclick="resetFilters()">↺ Reset</button>
-      </div>
-
-      <!-- GRID -->
-      <div class="repuestos-grid" id="partsGrid">
-
-        <div class="repuesto-card reveal" data-model="vento cruze corolla 208" data-cat="engine">
-          <span class="repuesto-icon">🔩</span>
-          <p class="repuesto-category">Engine</p>
-          <div class="repuesto-name">SPARK PLUGS SET</div>
-          <p class="repuesto-compat">Compatible with: <strong>VW Vento · Chevrolet Cruze · Toyota Corolla · Peugeot 208</strong></p>
-          <div class="repuesto-footer">
-            <div>
-              <div class="repuesto-price-label">Price</div>
-              <div class="repuesto-price">$18.500</div>
-            </div>
-            <span class="repuesto-stock">✔ In Stock</span>
-          </div>
-          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
-        </div>
-
-        <div class="repuesto-card reveal" data-model="ranger duster corolla" data-cat="wheels">
-          <span class="repuesto-icon">🛞</span>
-          <p class="repuesto-category">Wheels &amp; Tires</p>
-          <div class="repuesto-name">STEEL RIM 16"</div>
-          <p class="repuesto-compat">Compatible with: <strong>Ford Ranger · Renault Duster · Toyota Corolla</strong></p>
-          <div class="repuesto-footer">
-            <div>
-              <div class="repuesto-price-label">Price</div>
-              <div class="repuesto-price">$95.000</div>
-            </div>
-            <span class="repuesto-stock">✔ In Stock</span>
-          </div>
-          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
-        </div>
-
-        <div class="repuesto-card reveal" data-model="vento cruze corolla 208 duster" data-cat="engine">
-          <span class="repuesto-icon">🔧</span>
-          <p class="repuesto-category">Engine</p>
-          <div class="repuesto-name">PISTON &amp; CYLINDER KIT</div>
-          <p class="repuesto-compat">Compatible with: <strong>VW Vento · Chevrolet Cruze · Toyota Corolla · Peugeot 208 · Duster</strong></p>
-          <div class="repuesto-footer">
-            <div>
-              <div class="repuesto-price-label">Price</div>
-              <div class="repuesto-price">$210.000</div>
-            </div>
-            <span class="repuesto-stock low">⚠ Low Stock</span>
-          </div>
-          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
-        </div>
-
-        <div class="repuesto-card reveal" data-model="ranger duster cruze" data-cat="brakes">
-          <span class="repuesto-icon">🛑</span>
-          <p class="repuesto-category">Brakes</p>
-          <div class="repuesto-name">BRAKE DISC SET</div>
-          <p class="repuesto-compat">Compatible with: <strong>Ford Ranger · Renault Duster · Chevrolet Cruze</strong></p>
-          <div class="repuesto-footer">
-            <div>
-              <div class="repuesto-price-label">Price</div>
-              <div class="repuesto-price">$78.000</div>
-            </div>
-            <span class="repuesto-stock">✔ In Stock</span>
-          </div>
-          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
-        </div>
-
-        <div class="repuesto-card reveal" data-model="vento corolla 208" data-cat="suspension">
-          <span class="repuesto-icon">⚙️</span>
-          <p class="repuesto-category">Suspension</p>
-          <div class="repuesto-name">FRONT SHOCK ABSORBER</div>
-          <p class="repuesto-compat">Compatible with: <strong>VW Vento · Toyota Corolla · Peugeot 208</strong></p>
-          <div class="repuesto-footer">
-            <div>
-              <div class="repuesto-price-label">Price</div>
-              <div class="repuesto-price">$145.000</div>
-            </div>
-            <span class="repuesto-stock">✔ In Stock</span>
-          </div>
-          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
-        </div>
-
-        <div class="repuesto-card reveal" data-model="ranger duster cruze vento corolla 208" data-cat="filters">
-          <span class="repuesto-icon">🌀</span>
-          <p class="repuesto-category">Filters</p>
-          <div class="repuesto-name">OIL FILTER</div>
-          <p class="repuesto-compat">Compatible with: <strong>All Models</strong></p>
-          <div class="repuesto-footer">
-            <div>
-              <div class="repuesto-price-label">Price</div>
-              <div class="repuesto-price">$12.000</div>
-            </div>
-            <span class="repuesto-stock">✔ In Stock</span>
-          </div>
-          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
-        </div>
-
-        <div class="repuesto-card reveal" data-model="ranger duster cruze vento corolla 208" data-cat="filters">
-          <span class="repuesto-icon">💨</span>
-          <p class="repuesto-category">Filters</p>
-          <div class="repuesto-name">AIR FILTER</div>
-          <p class="repuesto-compat">Compatible with: <strong>All Models</strong></p>
-          <div class="repuesto-footer">
-            <div>
-              <div class="repuesto-price-label">Price</div>
-              <div class="repuesto-price">$9.500</div>
-            </div>
-            <span class="repuesto-stock">✔ In Stock</span>
-          </div>
-          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
-        </div>
-
-        <div class="repuesto-card reveal" data-model="vento cruze corolla 208" data-cat="electrical">
-          <span class="repuesto-icon">🔋</span>
-          <p class="repuesto-category">Electrical</p>
-          <div class="repuesto-name">12V CAR BATTERY</div>
-          <p class="repuesto-compat">Compatible with: <strong>VW Vento · Chevrolet Cruze · Toyota Corolla · Peugeot 208</strong></p>
-          <div class="repuesto-footer">
-            <div>
-              <div class="repuesto-price-label">Price</div>
-              <div class="repuesto-price">$85.000</div>
-            </div>
-            <span class="repuesto-stock">✔ In Stock</span>
-          </div>
-          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
-        </div>
-
-        <div class="repuesto-card reveal" data-model="ranger duster" data-cat="wheels">
-          <span class="repuesto-icon">🛞</span>
-          <p class="repuesto-category">Wheels &amp; Tires</p>
-          <div class="repuesto-name">ALL-TERRAIN TIRE 265/70</div>
-          <p class="repuesto-compat">Compatible with: <strong>Ford Ranger · Renault Duster</strong></p>
-          <div class="repuesto-footer">
-            <div>
-              <div class="repuesto-price-label">Price</div>
-              <div class="repuesto-price">$180.000</div>
-            </div>
-            <span class="repuesto-stock low">⚠ Low Stock</span>
-          </div>
-          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
-        </div>
-
-        <div class="repuesto-card reveal" data-model="vento corolla cruze 208 duster ranger" data-cat="brakes">
-          <span class="repuesto-icon">🛑</span>
-          <p class="repuesto-category">Brakes</p>
-          <div class="repuesto-name">BRAKE PAD SET</div>
-          <p class="repuesto-compat">Compatible with: <strong>All Models</strong></p>
-          <div class="repuesto-footer">
-            <div>
-              <div class="repuesto-price-label">Price</div>
-              <div class="repuesto-price">$42.000</div>
-            </div>
-            <span class="repuesto-stock">✔ In Stock</span>
-          </div>
-          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
-        </div>
-
-        <div class="repuesto-card reveal" data-model="vento cruze corolla 208" data-cat="suspension">
-          <span class="repuesto-icon">⚙️</span>
-          <p class="repuesto-category">Suspension</p>
-          <div class="repuesto-name">REAR SPRING KIT</div>
-          <p class="repuesto-compat">Compatible with: <strong>VW Vento · Chevrolet Cruze · Toyota Corolla · Peugeot 208</strong></p>
-          <div class="repuesto-footer">
-            <div>
-              <div class="repuesto-price-label">Price</div>
-              <div class="repuesto-price">$98.000</div>
-            </div>
-            <span class="repuesto-stock">✔ In Stock</span>
-          </div>
-          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
-        </div>
-
-        <div class="repuesto-card reveal" data-model="ranger cruze duster" data-cat="engine">
-          <span class="repuesto-icon">🔧</span>
-          <p class="repuesto-category">Engine</p>
-          <div class="repuesto-name">TIMING BELT KIT</div>
-          <p class="repuesto-compat">Compatible with: <strong>Ford Ranger · Chevrolet Cruze · Renault Duster</strong></p>
-          <div class="repuesto-footer">
-            <div>
-              <div class="repuesto-price-label">Price</div>
-              <div class="repuesto-price">$135.000</div>
-            </div>
-            <span class="repuesto-stock">✔ In Stock</span>
-          </div>
-          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
-        </div>
-
-        <div class="no-results" id="noResults">No parts found for the selected filters.</div>
-
-      </div>
-    </div>
-  </section>
-
   <!-- CONTACTO -->
   <section class="contacto" id="contacto">
     <div class="contacto-inner reveal">
@@ -1450,42 +963,17 @@
         <input class="contacto-input full" type="text" name="interest" placeholder="Which car are you interested in?" required />
         <button class="contacto-submit full" type="submit">Send Inquiry →</button>
       </form>
+      <div class="contacto-success" id="contacto-success">
+        <div class="contacto-success-title">Inquiry received</div>
+        <p class="contacto-success-text">Thanks for reaching out. Your message was sent successfully and Automotores Martino will contact you shortly.</p>
+      </div>
+      <p class="contacto-error" id="contacto-error">We couldn't send your inquiry right now. Please try again in a moment or contact us by email.</p>
       <a href="mailto:automotoresmartino@gmail.com" class="contacto-email-link">
         <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;flex-shrink:0"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
         automotoresmartino@gmail.com
       </a>
     </div>
   </section>
-
-
-  <!-- CHAT WIDGET -->
-  <div id="chat-widget">
-    <div id="chat-box" class="hidden">
-      <div id="chat-header">
-        <div class="chat-header-left">
-          <div class="chat-avatar">🚗</div>
-          <div class="chat-header-info">
-            <div class="chat-header-name">MARTINO ASSISTANT</div>
-            <div class="chat-header-status"><span class="status-dot"></span> Online · Ready to help</div>
-          </div>
-        </div>
-        <button class="chat-close" onclick="toggleChat()">✕</button>
-      </div>
-      <div id="chat-messages"></div>
-      <div class="chat-note">AI replies are powered server-side for security.</div>
-      <div class="chat-suggestions" id="chat-suggestions">
-        <button class="chat-suggestion" onclick="sendSuggestion('What cars do you have available?')">Available cars</button>
-        <button class="chat-suggestion" onclick="sendSuggestion('Do you have financing options?')">Financing</button>
-        <button class="chat-suggestion" onclick="sendSuggestion('What spare parts do you sell?')">Spare parts</button>
-        <button class="chat-suggestion" onclick="sendSuggestion('How can I contact you?')">Contact</button>
-      </div>
-      <div id="chat-input-area">
-        <input id="chat-input" type="text" placeholder="Write your question..." />
-        <button id="chat-send" onclick="sendMessage()">➤</button>
-      </div>
-    </div>
-    <button id="chat-toggle" onclick="toggleChat()" title="Virtual Assistant">💬</button>
-  </div>
 
   <!-- FOOTER -->
   <footer>
@@ -1513,21 +1001,21 @@
     // Cursor
     const cursor = document.getElementById('cursor');
     const ring = document.getElementById('cursor-ring');
-    document.addEventListener('mousemove', function(e) {
+    document.addEventListener('mousemove', e => {
       cursor.style.left = e.clientX + 'px';
       cursor.style.top = e.clientY + 'px';
-      setTimeout(function() {
+      setTimeout(() => {
         ring.style.left = e.clientX + 'px';
         ring.style.top = e.clientY + 'px';
       }, 60);
     });
-    document.querySelectorAll('a,button,.auto-card').forEach(function(el) {
-      el.addEventListener('mouseenter', function() {
+    document.querySelectorAll('a,button,.auto-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
         cursor.style.width = '20px'; cursor.style.height = '20px';
         ring.style.width = '52px'; ring.style.height = '52px';
         ring.style.borderColor = 'rgba(192,0,10,0.8)';
       });
-      el.addEventListener('mouseleave', function() {
+      el.addEventListener('mouseleave', () => {
         cursor.style.width = '12px'; cursor.style.height = '12px';
         ring.style.width = '36px'; ring.style.height = '36px';
         ring.style.borderColor = 'rgba(192,0,10,0.5)';
@@ -1536,170 +1024,48 @@
 
     // Reveal on scroll
     const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('visible'); }
       });
     }, { threshold: 0.12 });
-    reveals.forEach(function(r) { observer.observe(r); });
+    reveals.forEach(r => observer.observe(r));
 
-    // Scroll to contact
-    function scrollToContacto() {
-      document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
-    }
+    // Contact form submission through Netlify without leaving the page
+    const contactForm = document.querySelector('.contacto-form');
+    const contactSuccess = document.getElementById('contacto-success');
+    const contactError = document.getElementById('contacto-error');
+    if (contactForm && contactSuccess && contactError) {
+      contactForm.addEventListener('submit', async event => {
+        event.preventDefault();
+        contactError.classList.remove('is-visible');
 
-    // Parts filter
-    function filterParts() {
-      const model = document.getElementById('filter-model').value;
-      const cat = document.getElementById('filter-cat').value;
-      const cards = document.querySelectorAll('.repuesto-card');
-      let visible = 0;
-      cards.forEach(function(card) {
-        const cardModels = card.dataset.model || '';
-        const cardCat = card.dataset.cat || '';
-        const modelMatch = model === 'all' || cardModels.includes(model);
-        const catMatch = cat === 'all' || cardCat === cat;
-        if (modelMatch && catMatch) {
-          card.style.display = '';
-          visible++;
-        } else {
-          card.style.display = 'none';
+        const formData = new FormData(contactForm);
+        try {
+          const response = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(formData).toString()
+          });
+
+          if (!response.ok) {
+            throw new Error('Netlify form submission failed');
+          }
+
+          contactForm.reset();
+          contactForm.classList.add('is-hidden');
+          contactSuccess.classList.add('is-visible');
+          contactSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } catch (error) {
+          contactError.classList.add('is-visible');
         }
       });
-      document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
     }
 
-    function resetFilters() {
-      document.getElementById('filter-model').value = 'all';
-      document.getElementById('filter-cat').value = 'all';
-      filterParts();
+    // Scroll to contact
+    function scrollToContact() {
+      document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
     }
-
-    // ---- CHAT ----
-    var CHAT_ENDPOINT = '/.netlify/functions/martino-assistant';
-    var chatHistory = [];
-    var chatOpen = false;
-    var chatInitialized = false;
-    var chatPending = false;
-    var chatInput = document.getElementById('chat-input');
-    var chatSend = document.getElementById('chat-send');
-    var chatSuggestions = document.getElementById('chat-suggestions');
-
-    function toggleChat() {
-      chatOpen = !chatOpen;
-      var box = document.getElementById('chat-box');
-      var toggle = document.getElementById('chat-toggle');
-      if (chatOpen) {
-        box.classList.remove('hidden');
-        toggle.textContent = '✕';
-        if (!chatInitialized) {
-          chatInitialized = true;
-          setTimeout(function() {
-            appendMessage('bot', "Hello! Welcome to Automotores Martino.\nI'm your AI assistant. Ask me about vehicles, financing, spare parts, or contact details.");
-          }, 400);
-        }
-        scrollMessages();
-      } else {
-        box.classList.add('hidden');
-        toggle.textContent = '💬';
-      }
-    }
-
-    function getTime() {
-      return new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-    }
-
-    function appendMessage(role, text) {
-      var msgs = document.getElementById('chat-messages');
-      var div = document.createElement('div');
-      div.className = 'msg ' + role;
-
-      var bubble = document.createElement('div');
-      bubble.className = 'msg-bubble';
-      bubble.textContent = text;
-
-      var time = document.createElement('span');
-      time.className = 'msg-time';
-      time.textContent = getTime();
-
-      div.appendChild(bubble);
-      div.appendChild(time);
-      msgs.appendChild(div);
-      scrollMessages();
-    }
-
-    function showTyping() {
-      var msgs = document.getElementById('chat-messages');
-      var div = document.createElement('div');
-      div.className = 'msg bot';
-      div.id = 'typing-msg';
-      div.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
-      msgs.appendChild(div);
-      scrollMessages();
-    }
-
-    function removeTyping() {
-      var t = document.getElementById('typing-msg');
-      if (t) t.remove();
-    }
-
-    function scrollMessages() {
-      var msgs = document.getElementById('chat-messages');
-      msgs.scrollTop = msgs.scrollHeight;
-    }
-
-    function setChatPending(isPending) {
-      chatPending = isPending;
-      chatInput.disabled = isPending;
-      chatSend.disabled = isPending;
-    }
-
-    async function sendMessage(prefilledText) {
-      if (chatPending) return;
-      var text = (prefilledText || chatInput.value).trim();
-      if (!text) return;
-      chatInput.value = '';
-      if (chatSuggestions) chatSuggestions.style.display = 'none';
-
-      appendMessage('user', text);
-      chatHistory.push({ role: 'user', text: text });
-      setChatPending(true);
-      showTyping();
-
-      try {
-        var response = await fetch(CHAT_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            message: text,
-            history: chatHistory.slice(-8)
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error('Assistant request failed');
-        }
-
-        var payload = await response.json();
-        removeTyping();
-        appendMessage('bot', payload.reply || "I'm sorry, I couldn't generate a reply right now.");
-        chatHistory.push({ role: 'assistant', text: payload.reply || '' });
-      } catch (error) {
-        removeTyping();
-        appendMessage('bot', "I'm having trouble responding right now. Please try again in a moment or contact us at automotoresmartino@gmail.com.");
-      } finally {
-        setChatPending(false);
-        chatInput.focus();
-      }
-    }
-
-    function sendSuggestion(text) {
-      sendMessage(text);
-    }
-
-    document.getElementById('chat-input').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') sendMessage();
-    });
   </script>
 </body>
 </html>
