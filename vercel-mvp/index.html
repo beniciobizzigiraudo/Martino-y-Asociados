@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Automotores Martino</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --rojo: #C0000A;
+      --rojo-oscuro: #7a0005;
+      --negro: #0a0a0a;
+      --negro-medio: #141414;
+      --negro-suave: #1e1e1e;
+      --gris: #2a2a2a;
+      --gris-claro: #888;
+      --blanco: #f5f0eb;
+      --crema: #e8ddd0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--negro);
+      color: var(--blanco);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* ---- CURSOR PERSONALIZADO ---- */
+    body { cursor: none; }
+    #cursor {
+      position: fixed; width: 12px; height: 12px;
+      background: var(--rojo); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease;
+    }
+    #cursor-ring {
+      position: fixed; width: 36px; height: 36px;
+      border: 1px solid rgba(192, 0, 10, 0.5); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* ---- NAVBAR ---- */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 4rem;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.98) 0%, transparent 100%);
+      border-bottom: 1px solid rgba(192,0,10,0.15);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.7rem;
+      letter-spacing: 0.12em;
+      color: var(--blanco);
+    }
+    .nav-logo span { color: var(--rojo); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--gris-claro);
+      text-decoration: none;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--rojo); }
+    .nav-cta {
+      background: var(--rojo);
+      color: var(--blanco) !important;
+      padding: 0.55rem 1.4rem;
+      border: none;
+      font-weight: 600 !important;
+      transition: background 0.3s !important;
+    }
+    .nav-cta:hover { background: var(--rojo-oscuro) !important; color: var(--blanco) !important; }
+
+    /* ---- HERO ---- */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: var(--negro);
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 60% 50%, rgba(192,0,10,0.08) 0%, transparent 70%),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 79px,
+          rgba(255,255,255,0.015) 80px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 79px,
+          rgba(255,255,255,0.015) 80px
+        );
+    }
+    .hero-line {
+      position: absolute; left: 0; top: 50%; width: 38%; height: 1px;
+      background: linear-gradient(to right, transparent, var(--rojo));
+      opacity: 0.5;
+    }
+    .hero-line-right {
+      position: absolute; right: 0; top: 55%; width: 30%; height: 1px;
+      background: linear-gradient(to left, transparent, var(--rojo));
+      opacity: 0.3;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      padding: 0 2rem;
+      animation: fadeInUp 1.2s ease both;
+    }
+    .hero-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--rojo);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4.5rem, 12vw, 11rem);
+      line-height: 0.9;
+      letter-spacing: 0.04em;
+      color: var(--blanco);
+      text-shadow: 0 0 80px rgba(192,0,10,0.2);
+    }
+    .hero-title span { color: var(--rojo); }
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      font-style: italic;
+      color: var(--crema);
+      margin-top: 1.5rem;
+      opacity: 0.85;
+      letter-spacing: 0.04em;
+    }
+    .hero-actions {
+      display: flex; gap: 1.2rem; justify-content: center;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--rojo);
+      color: var(--blanco);
+      padding: 1rem 2.8rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--rojo-oscuro); transform: translateY(-2px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--blanco);
+      padding: 1rem 2.8rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: border-color 0.3s, color 0.3s, transform 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-secondary:hover { border-color: var(--rojo); color: var(--rojo); transform: translateY(-2px); }
+
+    /* ---- DIVIDER ---- */
+    .divider {
+      display: flex; align-items: center; gap: 1.5rem;
+      padding: 0 4rem;
+      margin: 4rem 0;
+    }
+    .divider-line { flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
+    .divider-icon {
+      width: 8px; height: 8px;
+      background: var(--rojo);
+      transform: rotate(45deg);
+    }
+
+    /* ---- NOSOTROS ---- */
+    .nosotros {
+      padding: 8rem 4rem;
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 8rem;
+      align-items: center;
+    }
+    .nosotros-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--rojo);
+      margin-bottom: 1.2rem;
+    }
+    .nosotros-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      line-height: 0.95;
+      color: var(--blanco);
+      margin-bottom: 0.5rem;
+    }
+    .nosotros-title-italic {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      font-style: italic;
+      color: var(--rojo);
+      margin-bottom: 3rem;
+    }
+    .nosotros-text {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: #bbb;
+      margin-bottom: 1.6rem;
+      font-weight: 300;
+    }
+    .nosotros-text strong { color: var(--blanco); font-weight: 600; }
+    .stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; border-top: 1px solid rgba(255,255,255,0.08);
+      margin-top: 3rem;
+    }
+    .stat {
+      padding: 2rem 0;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat:last-child { border-right: none; padding-left: 1.5rem; }
+    .stat:not(:first-child) { padding-left: 1.5rem; }
+    .stat-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--rojo);
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gris-claro);
+      margin-top: 0.2rem;
+    }
+    .nosotros-image {
+      position: relative;
+    }
+    .nosotros-image-box {
+      width: 100%; aspect-ratio: 4/3;
+      background: var(--negro-suave);
+      border: 1px solid rgba(192,0,10,0.2);
+      overflow: hidden;
+      position: relative;
+    }
+    .nosotros-image-box img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(30%) contrast(1.1);
+    }
+    .nosotros-image-box::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(192,0,10,0.15) 0%, transparent 60%);
+    }
+    .nosotros-deco {
+      position: absolute;
+      bottom: -20px; right: -20px;
+      width: 60%; height: 60%;
+      border: 1px solid rgba(192,0,10,0.3);
+      z-index: -1;
+    }
+
+    /* ---- TRUST BADGES ---- */
+    .confianza-bar {
+      background: var(--negro-medio);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 2.5rem 4rem;
+    }
+    .confianza-inner {
+      max-width: 1300px; margin: 0 auto;
+      display: flex; justify-content: space-around; align-items: center;
+      flex-wrap: wrap; gap: 2rem;
+    }
+    .badge {
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .badge-icon {
+      width: 44px; height: 44px;
+      border: 1px solid var(--rojo);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--rojo); font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .badge-text { }
+    .badge-title {
+      font-size: 0.78rem; font-weight: 600; color: var(--blanco);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .badge-sub { font-size: 0.7rem; color: var(--gris-claro); margin-top: 0.15rem; }
+
+    /* ---- STOCK ---- */
+    .stock-section {
+      padding: 8rem 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .section-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 4rem;
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .section-label {
+      font-size: 0.65rem; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--rojo); margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      color: var(--blanco); line-height: 0.95;
+    }
+    .section-sub {
+      font-size: 0.82rem; color: var(--gris-claro); line-height: 1.6; max-width: 300px;
+    }
+
+    /* ---- FICHA TÉCNICA ---- */
+    .auto-specs-tech {
+      margin-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 0.9rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.45rem 0.5rem;
+    }
+    .tech-row {
+      display: flex; flex-direction: column; gap: 0.1rem;
+    }
+    .tech-label {
+      font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3); font-weight: 500;
+    }
+    .tech-val {
+      font-size: 0.78rem; color: var(--blanco); font-weight: 500;
+    }
+    .tech-val.fuel { font-weight: 600; font-size: 0.75rem; }
+    .tech-val.nafta { color: #e8a020; }
+    .tech-val.diesel { color: #4ab3f4; }
+
+    /* ---- GRID AUTOS ---- */
+    .autos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+    }
+    .auto-card {
+      background: var(--negro-medio);
+      position: relative; overflow: hidden;
+      cursor: none;
+      border: 1px solid rgba(255,255,255,0.04);
+      transition: border-color 0.3s;
+    }
+    .auto-card:hover { border-color: rgba(192,0,10,0.4); }
+    .auto-card-img {
+      width: 100%; aspect-ratio: 16/10;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(20%) contrast(1.05);
+      transition: transform 0.6s ease, filter 0.4s ease;
+    }
+    .auto-card:hover .auto-card-img {
+      transform: scale(1.04);
+      filter: grayscale(0%) contrast(1.1);
+    }
+    .auto-card-img-placeholder {
+      width: 100%; aspect-ratio: 16/10;
+      background: var(--negro-suave);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.1);
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+    }
+    .auto-card-img-placeholder::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(192,0,10,0.05) 0%, transparent 60%);
+    }
+    .auto-card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .auto-card-body {
+      padding: 1.6rem 1.8rem 1.8rem;
+      border-top: 2px solid var(--rojo);
+    }
+    .auto-badge {
+      font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--rojo); font-weight: 600; margin-bottom: 0.6rem;
+    }
+    .auto-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.65rem; letter-spacing: 0.04em;
+      color: var(--blanco); line-height: 1;
+    }
+    .auto-year { color: var(--gris-claro); font-size: 0.85rem; margin-top: 0.15rem; }
+    .auto-specs {
+      display: flex; gap: 1.5rem; margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    .auto-spec {
+      font-size: 0.68rem; color: var(--gris-claro);
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .auto-spec span { color: var(--blanco); font-weight: 500; display: block; margin-top: 0.1rem; font-size: 0.78rem; letter-spacing: 0; text-transform: none; }
+    .auto-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 1.5rem; padding-top: 1.2rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .auto-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; color: var(--blanco);
+    }
+    .auto-price-label { font-size: 0.6rem; color: var(--rojo); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.1rem; }
+    .auto-btn {
+      background: transparent;
+      border: 1px solid rgba(192,0,10,0.5);
+      color: var(--rojo);
+      padding: 0.6rem 1.3rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+    .auto-btn:hover { background: var(--rojo); color: var(--blanco); }
+    .auto-card.featured { grid-column: span 2; }
+    .auto-card.featured .auto-card-img-placeholder { aspect-ratio: 21/9; }
+    .auto-card.featured .auto-card-img { aspect-ratio: 21/9; }
+    .auto-card.featured .auto-name { font-size: 2.2rem; }
+
+    /* ---- CONTACTO ---- */
+    .contacto {
+      background: var(--negro-medio);
+      padding: 8rem 4rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+    .contacto::before {
+      content: 'MARTINO';
+      position: absolute; bottom: -2rem; right: -1rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 14rem; color: rgba(255,255,255,0.02);
+      pointer-events: none; user-select: none;
+    }
+    .contacto-inner {
+      max-width: 800px; margin: 0 auto; text-align: center;
+      position: relative; z-index: 2;
+    }
+    .contacto-label {
+      font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase;
+      color: var(--rojo); margin-bottom: 1.2rem;
+    }
+    .contacto-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 6vw, 6rem);
+      color: var(--blanco); line-height: 0.95; margin-bottom: 1.5rem;
+    }
+    .contacto-text {
+      font-size: 0.9rem; color: var(--gris-claro); line-height: 1.8; margin-bottom: 3rem;
+    }
+    .contacto-form {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+      background: rgba(255,255,255,0.05); margin-bottom: 1px;
+    }
+    .contacto-input {
+      background: var(--negro-suave); border: none; outline: none;
+      color: var(--blanco);
+      padding: 1.2rem 1.5rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem; letter-spacing: 0.04em;
+      transition: background 0.3s;
+      width: 100%;
+    }
+    .contacto-input::placeholder { color: rgba(255,255,255,0.2); }
+    .contacto-input:focus { background: #222; }
+    .contacto-input.full { grid-column: span 2; }
+    .contacto-status {
+      display: none;
+      margin-top: 1rem;
+      color: var(--crema);
+      font-size: 0.78rem;
+      line-height: 1.7;
+    }
+    .contacto-status.is-visible { display: block; }
+    .contacto-submit {
+      width: 100%; margin-top: 1px;
+      background: var(--rojo);
+      color: var(--blanco); border: none;
+      padding: 1.3rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.78rem; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 600;
+      cursor: pointer; transition: background 0.3s;
+    }
+    .contacto-submit:hover { background: var(--rojo-oscuro); }
+
+    /* ---- FOOTER ---- */
+    footer {
+      background: var(--negro);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 3rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem; letter-spacing: 0.1em;
+      color: var(--blanco);
+    }
+    .footer-logo span { color: var(--rojo); }
+    .footer-copy { font-size: 0.68rem; color: var(--gris-claro); letter-spacing: 0.1em; }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      font-size: 0.68rem; color: var(--gris-claro);
+      text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--rojo); }
+
+    .footer-social { display: flex; gap: 0.8rem; align-items: center; }
+    .social-link {
+      width: 38px; height: 38px;
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gris-claro);
+      transition: border-color 0.3s, color 0.3s, background 0.3s;
+      text-decoration: none;
+    }
+    .social-link svg { width: 17px; height: 17px; }
+    .social-link:hover { border-color: var(--rojo); color: var(--rojo); background: rgba(192,0,10,0.08); }
+    .contacto-email-link {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      color: var(--rojo); font-size: 0.9rem; font-weight: 500;
+      text-decoration: none; letter-spacing: 0.05em;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(192,0,10,0.35);
+      padding-bottom: 0.3rem;
+      transition: color 0.3s;
+    }
+    .contacto-email-link:hover { color: var(--blanco); }
+
+    /* ---- ANIMATIONS ---- */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 2rem; }
+      .nav-links { display: none; }
+      .nosotros { grid-template-columns: 1fr; gap: 4rem; padding: 5rem 2rem; }
+      .autos-grid { grid-template-columns: 1fr; }
+      .auto-card.featured { grid-column: span 1; }
+      .auto-card.featured .auto-card-img { aspect-ratio: 16/10; }
+      .auto-card.featured .auto-card-img-placeholder { aspect-ratio: 16/10; }
+      .stock-section { padding: 5rem 2rem; }
+      .contacto { padding: 5rem 2rem; }
+      .contacto-form { grid-template-columns: 1fr; }
+      .contacto-input.full { grid-column: span 1; }
+      footer { padding: 2rem; flex-direction: column; text-align: center; }
+      .confianza-bar { padding: 2rem; }
+      .hero-title { font-size: clamp(3.5rem, 18vw, 6rem); }
+    }
+
+    /* ---- REPUESTOS ---- */
+    .repuestos-section {
+      padding: 8rem 4rem;
+      background: var(--negro-medio);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .repuestos-inner { max-width: 1400px; margin: 0 auto; }
+
+    .repuestos-filters {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      margin-bottom: 1rem; margin-top: 2.5rem;
+    }
+    .filter-group { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; min-width: 200px; }
+    .filter-label {
+      font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--rojo); font-weight: 600;
+    }
+    .filter-select {
+      background: var(--negro-suave);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--blanco);
+      padding: 0.85rem 1.2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.3s;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C0000A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+    .filter-select:focus { border-color: var(--rojo); }
+    .filter-select option { background: #1a1a1a; }
+
+    .filter-btn {
+      background: var(--rojo); border: none; color: var(--blanco);
+      padding: 0.85rem 2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+      cursor: pointer; align-self: flex-end;
+      transition: background 0.3s;
+      white-space: nowrap;
+    }
+    .filter-btn:hover { background: var(--rojo-oscuro); }
+
+    .repuestos-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      margin-top: 3rem;
+      background: rgba(255,255,255,0.04);
+    }
+    .repuesto-card {
+      background: var(--negro);
+      padding: 1.8rem;
+      border: 1px solid rgba(255,255,255,0.04);
+      transition: border-color 0.3s, background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .repuesto-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--rojo);
+      transition: height 0.3s ease;
+    }
+    .repuesto-card:hover::before { height: 100%; }
+    .repuesto-card:hover { background: var(--negro-suave); border-color: rgba(192,0,10,0.3); }
+
+    .repuesto-icon {
+      font-size: 2rem; margin-bottom: 1.2rem; display: block;
+      filter: grayscale(1); transition: filter 0.3s;
+    }
+    .repuesto-card:hover .repuesto-icon { filter: grayscale(0); }
+
+    .repuesto-category {
+      font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--rojo); margin-bottom: 0.5rem; font-weight: 600;
+    }
+    .repuesto-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.35rem; color: var(--blanco); letter-spacing: 0.03em;
+      line-height: 1.1; margin-bottom: 0.5rem;
+    }
+    .repuesto-compat {
+      font-size: 0.68rem; color: var(--gris-claro); margin-bottom: 1.2rem;
+      line-height: 1.5;
+    }
+    .repuesto-compat strong { color: rgba(255,255,255,0.6); font-weight: 500; }
+    .repuesto-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.06);
+      margin-top: 1rem;
+    }
+    .repuesto-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem; color: var(--blanco);
+    }
+    .repuesto-price-label {
+      font-size: 0.55rem; color: var(--rojo); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.1rem;
+    }
+    .repuesto-stock {
+      font-size: 0.62rem; color: #5cba7d; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .repuesto-stock.low { color: #e8a020; }
+    .repuesto-btn {
+      display: block; width: 100%; margin-top: 1rem;
+      background: transparent; border: 1px solid rgba(192,0,10,0.4);
+      color: var(--rojo); padding: 0.6rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600;
+      cursor: pointer; transition: background 0.3s, color 0.3s;
+    }
+    .repuesto-btn:hover { background: var(--rojo); color: var(--blanco); }
+
+    .no-results {
+      grid-column: 1/-1; text-align: center;
+      padding: 4rem; color: var(--gris-claro);
+      font-size: 0.85rem; letter-spacing: 0.1em;
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .repuestos-section { padding: 5rem 2rem; }
+      .repuestos-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .repuestos-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ---- CHAT WIDGET ---- */
+    #chat-widget {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 1000;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 1rem;
+    }
+    #chat-box {
+      width: 360px;
+      background: var(--negro-medio);
+      border: 1px solid rgba(192,0,10,0.35);
+      display: flex; flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      transition: all 0.35s cubic-bezier(.4,0,.2,1);
+      max-height: 520px;
+      overflow: hidden;
+    }
+    #chat-box.hidden { max-height: 0; opacity: 0; pointer-events: none; transform: translateY(20px); border: none; }
+    #chat-header {
+      background: var(--rojo);
+      padding: 1rem 1.3rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-shrink: 0;
+    }
+    .chat-header-left { display: flex; align-items: center; gap: 0.75rem; }
+    .chat-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+    .chat-header-info { }
+    .chat-header-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem; letter-spacing: 0.06em; color: var(--blanco);
+    }
+    .chat-header-status {
+      font-size: 0.6rem; color: rgba(255,255,255,0.75);
+      letter-spacing: 0.1em; display: flex; align-items: center; gap: 0.3rem;
+    }
+    .status-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: #7fff7f;
+      animation: pulse-dot 1.5s infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity:1; } 50% { opacity:0.4; }
+    }
+    .chat-close {
+      background: none; border: none; color: rgba(255,255,255,0.7);
+      font-size: 1.2rem; cursor: pointer; line-height: 1; padding: 0;
+      transition: color 0.2s;
+    }
+    .chat-close:hover { color: var(--blanco); }
+    #chat-messages {
+      flex: 1; overflow-y: auto; padding: 1.2rem;
+      display: flex; flex-direction: column; gap: 0.9rem;
+      min-height: 300px; max-height: 340px;
+      scrollbar-width: thin; scrollbar-color: rgba(192,0,10,0.3) transparent;
+    }
+    .msg {
+      max-width: 85%; display: flex; flex-direction: column; gap: 0.25rem;
+    }
+    .msg.bot { align-self: flex-start; }
+    .msg.user { align-self: flex-end; }
+    .msg-bubble {
+      padding: 0.75rem 1rem;
+      font-size: 0.78rem; line-height: 1.55; font-family: 'Montserrat', sans-serif;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .msg.bot .msg-bubble {
+      background: var(--negro-suave);
+      border: 1px solid rgba(255,255,255,0.07);
+      color: var(--blanco);
+      border-radius: 0 8px 8px 8px;
+    }
+    .msg.user .msg-bubble {
+      background: var(--rojo);
+      color: var(--blanco);
+      border-radius: 8px 0 8px 8px;
+    }
+    .msg-time {
+      font-size: 0.58rem; color: var(--gris-claro); letter-spacing: 0.08em;
+    }
+    .msg.user .msg-time { text-align: right; }
+    .typing-indicator {
+      display: flex; gap: 4px; align-items: center; padding: 0.75rem 1rem;
+      background: var(--negro-suave); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 0 8px 8px 8px; width: fit-content;
+    }
+    .typing-indicator span {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--rojo);
+      animation: typing-bounce 1.2s infinite;
+    }
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing-bounce {
+      0%,60%,100% { transform: translateY(0); opacity:0.4; }
+      30% { transform: translateY(-5px); opacity:1; }
+    }
+    #chat-input-area {
+      display: flex; gap: 0; border-top: 1px solid rgba(255,255,255,0.07); flex-shrink: 0;
+    }
+    #chat-input {
+      flex: 1; background: var(--negro-suave); border: none; outline: none;
+      color: var(--blanco); padding: 1rem 1.2rem;
+      font-family: 'Montserrat', sans-serif; font-size: 0.78rem;
+    }
+    #chat-input::placeholder { color: rgba(255,255,255,0.25); }
+    #chat-send {
+      background: var(--rojo); border: none; color: var(--blanco);
+      padding: 0 1.3rem; cursor: pointer; font-size: 1rem;
+      transition: background 0.2s;
+    }
+    #chat-send:hover { background: var(--rojo-oscuro); }
+    #chat-send:disabled,
+    #chat-input:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+    #chat-toggle {
+      width: 58px; height: 58px;
+      background: var(--rojo);
+      border: none; border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; box-shadow: 0 6px 24px rgba(192,0,10,0.5);
+      transition: transform 0.3s, background 0.3s;
+      flex-shrink: 0;
+    }
+    #chat-toggle:hover { transform: scale(1.1); background: var(--rojo-oscuro); }
+    .chat-suggestions {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0.7rem 1rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .chat-suggestion {
+      background: transparent; border: 1px solid rgba(192,0,10,0.35);
+      color: var(--rojo); padding: 0.35rem 0.75rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.62rem; letter-spacing: 0.08em; cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .chat-suggestion:hover { background: var(--rojo); color: var(--blanco); }
+    .chat-note {
+      padding: 0.7rem 1rem 0;
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+    }
+    @media (max-width: 420px) {
+      #chat-box { width: calc(100vw - 2rem); }
+      #chat-widget { right: 1rem; bottom: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-logo">AUTOMOTORES <span>MARTINO</span></div>
+    <ul class="nav-links">
+      <li><a href="#nosotros">About Us</a></li>
+      <li><a href="#repuestos">Parts</a></li>
+      <li><a href="#stock">Stock</a></li>
+      <li><a href="#contacto">Contact</a></li>
+      <li><a href="#contacto" class="nav-cta">Inquire</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-line"></div>
+    <div class="hero-line-right"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Trusted Dealership · Córdoba, Argentina</p>
+      <h1 class="hero-title">AUTO<span>MOTORES</span><br>MARTINO</h1>
+      <p class="hero-subtitle">Your next car is here. Backed by those who stand behind it.</p>
+      <div class="hero-actions">
+        <a href="#stock" class="btn-primary">View Available Stock</a>
+        <a href="#nosotros" class="btn-secondary">About Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="confianza-bar">
+    <div class="confianza-inner">
+      <div class="badge">
+        <div class="badge-icon">✓</div>
+        <div class="badge-text">
+          <div class="badge-title">Verified</div>
+          <div class="badge-sub">Every vehicle thoroughly inspected</div>
+        </div>
+      </div>
+      <div class="badge">
+        <div class="badge-icon">🔒</div>
+        <div class="badge-text">
+          <div class="badge-title">Full Documentation</div>
+          <div class="badge-sub">Safe and transparent paperwork</div>
+        </div>
+      </div>
+      <div class="badge">
+        <div class="badge-icon">★</div>
+        <div class="badge-text">
+          <div class="badge-title">+15 Years of Experience</div>
+          <div class="badge-sub">Thousands of satisfied customers</div>
+        </div>
+      </div>
+      <div class="badge">
+        <div class="badge-icon">⚙</div>
+        <div class="badge-text">
+          <div class="badge-title">Financing Available</div>
+          <div class="badge-sub">Plans tailored to your needs</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOSOTROS -->
+  <section class="nosotros" id="nosotros">
+    <div class="nosotros-left reveal">
+      <p class="nosotros-label">About Us</p>
+      <h2 class="nosotros-title">TRUST</h2>
+      <p class="nosotros-title-italic">built on facts</p>
+      <p class="nosotros-text">
+        At <strong>Automotores Martino</strong> we have spent over 15 years connecting people with the car they need. We were born in Córdoba with one conviction: buying a car should be a <strong>transparent, honest, and surprise-free</strong> experience.
+      </p>
+      <p class="nosotros-text">
+        Every vehicle in our stock goes through a rigorous technical inspection. All paperwork is in order. We don't just sell you a car — we give you the <strong>peace of mind of knowing exactly what you're buying</strong>.
+      </p>
+      <p class="nosotros-text">
+        Whether you're a first-time driver or looking to upgrade your fleet, at Automotores Martino you'll find personalized service, fair prices, and the backing of a company that values its reputation above all else.
+      </p>
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-number">+15</span>
+          <span class="stat-label">Years in Business</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">+900</span>
+          <span class="stat-label">Cars Delivered</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">100%</span>
+          <span class="stat-label">Verified Docs</span>
+        </div>
+      </div>
+    </div>
+    <div class="nosotros-image reveal">
+      <div class="nosotros-image-box">
+        <!-- IMAGEN NOSOTROS: reemplazá el src con tu URL -->
+        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80" alt="Automotores Martino" />
+      </div>
+      <div class="nosotros-deco"></div>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-icon"></div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- STOCK -->
+  <section class="stock-section" id="stock">
+    <div class="section-header reveal">
+      <div>
+        <p class="section-label">Our Stock</p>
+        <h2 class="section-title">VEHICLES<br>AVAILABLE</h2>
+      </div>
+      <p class="section-sub">Todos los precios son finales, sin costos ocultos. Financing All prices are final, no hidden costs. Financing available on all models.</p>
+    </div>
+
+    <div class="autos-grid">
+
+      <!-- AUTO DESTACADO -->
+      <div class="auto-card featured reveal">
+        <div class="auto-card-img-placeholder">
+          <!-- IMAGEN AUTO 1: reemplazá el src -->
+          <img class="auto-card-img" src="https://fotos.perfil.com/2025/03/21/volkswagen-vento-1989126.jpg" alt="Auto en venta" />
+        </div>
+        <div class="auto-card-overlay"></div>
+        <div class="auto-card-body">
+          <p class="auto-badge">⭐ Featured</p>
+          <div class="auto-name">VOLKSWAGEN VENTO</div>
+          <div class="auto-year">2021 · Nafta</div>
+          <div class="auto-specs">
+            <div class="auto-spec">Mileage<span>38.000</span></div>
+            <div class="auto-spec">Gearbox<span>Automatic</span></div>
+          </div>
+          <div class="auto-specs-tech">
+            <div class="tech-row"><span class="tech-label">Engine</span><span class="tech-val">1.4 TSI · 150 CV</span></div>
+            <div class="tech-row"><span class="tech-label">Model</span><span class="tech-val">Vento Highline</span></div>
+            <div class="tech-row"><span class="tech-label">Fuel</span><span class="tech-val fuel nafta">⬤ Gasoline</span></div>
+            <div class="tech-row"><span class="tech-label">Tank</span><span class="tech-val">55 L</span></div>
+            <div class="tech-row"><span class="tech-label">Length</span><span class="tech-val">4.644 m</span></div>
+            <div class="tech-row"><span class="tech-label">Width</span><span class="tech-val">1.799 m</span></div>
+          </div>
+          <div class="auto-footer">
+            <div>
+              <div class="auto-price-label">Price</div>
+              <div class="auto-price">$17.500.000</div>
+            </div>
+            <button class="auto-btn" onclick="scrollToContact()">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUTO 2 -->
+      <div class="auto-card reveal">
+        <div class="auto-card-img-placeholder">
+          <!-- IMAGEN AUTO 2: reemplazá el src -->
+          <img class="auto-card-img" src="https://techwondersinsights.com/wp-content/uploads/2025/05/20250520_1802_2026-Corolla-in-Cityscape_simple_compose_01jvptsjb3e7e8ph56jte14n8a-edited-768x432.png" alt="Toyota Corolla" />
+        </div>
+        <div class="auto-card-overlay"></div>
+        <div class="auto-card-body">
+          <p class="auto-badge">Available</p>
+          <div class="auto-name">TOYOTA COROLLA</div>
+          <div class="auto-year">2020 · Nafta/Híbrido</div>
+          <div class="auto-specs">
+            <div class="auto-spec">Mileage<span>52.000</span></div>
+            <div class="auto-spec">Gearbox<span>CVT</span></div>
+          </div>
+          <div class="auto-specs-tech">
+            <div class="tech-row"><span class="tech-label">Engine</span><span class="tech-val">1.8 Hybrid · 122 CV</span></div>
+            <div class="tech-row"><span class="tech-label">Model</span><span class="tech-val">Corolla XEI Hybrid</span></div>
+            <div class="tech-row"><span class="tech-label">Fuel</span><span class="tech-val fuel nafta">⬤ Gasoline / Hybrid</span></div>
+            <div class="tech-row"><span class="tech-label">Tank</span><span class="tech-val">43 L</span></div>
+            <div class="tech-row"><span class="tech-label">Length</span><span class="tech-val">4.630 m</span></div>
+            <div class="tech-row"><span class="tech-label">Width</span><span class="tech-val">1.790 m</span></div>
+          </div>
+          <div class="auto-footer">
+            <div>
+              <div class="auto-price-label">Price</div>
+              <div class="auto-price">$19.800.000</div>
+            </div>
+            <button class="auto-btn" onclick="scrollToContact()">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUTO 3 -->
+      <div class="auto-card reveal">
+        <div class="auto-card-img-placeholder">
+          <!-- IMAGEN AUTO 3: reemplazá el src -->
+          <img class="auto-card-img" src="https://chevroletspecsnews.com/wp-content/uploads/2024/02/2025-Chevrolet-Cruze-Sedan-Price-1.jpg" alt="Chevrolet Cruze" />
+        </div>
+        <div class="auto-card-overlay"></div>
+        <div class="auto-card-body">
+          <p class="auto-badge">Available</p>
+          <div class="auto-name">CHEVROLET CRUZE</div>
+          <div class="auto-year">2019 · Nafta</div>
+          <div class="auto-specs">
+            <div class="auto-spec">Mileage<span>67.000</span></div>
+            <div class="auto-spec">Gearbox<span>Manual</span></div>
+          </div>
+          <div class="auto-specs-tech">
+            <div class="tech-row"><span class="tech-label">Engine</span><span class="tech-val">1.4 Turbo · 153 CV</span></div>
+            <div class="tech-row"><span class="tech-label">Model</span><span class="tech-val">Cruze LTZ Premier</span></div>
+            <div class="tech-row"><span class="tech-label">Fuel</span><span class="tech-val fuel nafta">⬤ Gasoline</span></div>
+            <div class="tech-row"><span class="tech-label">Tank</span><span class="tech-val">57 L</span></div>
+            <div class="tech-row"><span class="tech-label">Length</span><span class="tech-val">4.650 m</span></div>
+            <div class="tech-row"><span class="tech-label">Width</span><span class="tech-val">1.808 m</span></div>
+          </div>
+          <div class="auto-footer">
+            <div>
+              <div class="auto-price-label">Price</div>
+              <div class="auto-price">$12.500.000</div>
+            </div>
+            <button class="auto-btn" onclick="scrollToContact()">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUTO 4 -->
+      <div class="auto-card reveal">
+        <div class="auto-card-img-placeholder">
+          <!-- IMAGEN AUTO 4: reemplazá el src -->
+          <img class="auto-card-img" src="https://i0.wp.com/thecarsmagz.com/wp-content/uploads/2023/01/2025-Ford-Ranger-Raptor-price.png?fit=1094%2C590&ssl=1" alt="Ford Ranger" />
+        </div>
+        <div class="auto-card-overlay"></div>
+        <div class="auto-card-body">
+          <p class="auto-badge">Available</p>
+          <div class="auto-name">FORD RANGER</div>
+          <div class="auto-year">2018 · Diesel 4x4</div>
+          <div class="auto-specs">
+            <div class="auto-spec">Mileage<span>88.000</span></div>
+            <div class="auto-spec">Gearbox<span>Manual</span></div>
+          </div>
+          <div class="auto-specs-tech">
+            <div class="tech-row"><span class="tech-label">Engine</span><span class="tech-val">3.2 TDCi · 200 CV</span></div>
+            <div class="tech-row"><span class="tech-label">Model</span><span class="tech-val">Ranger XLT 4x4</span></div>
+            <div class="tech-row"><span class="tech-label">Fuel</span><span class="tech-val fuel diesel">⬤ Diesel</span></div>
+            <div class="tech-row"><span class="tech-label">Tank</span><span class="tech-val">80 L</span></div>
+            <div class="tech-row"><span class="tech-label">Length</span><span class="tech-val">5.359 m</span></div>
+            <div class="tech-row"><span class="tech-label">Width</span><span class="tech-val">1.850 m</span></div>
+          </div>
+          <div class="auto-footer">
+            <div>
+              <div class="auto-price-label">Price</div>
+              <div class="auto-price">$18.200.000</div>
+            </div>
+            <button class="auto-btn" onclick="scrollToContact()">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUTO 5 -->
+      <div class="auto-card reveal">
+        <div class="auto-card-img-placeholder">
+          <!-- IMAGEN AUTO 5: reemplazá el src -->
+          <img class="auto-card-img" src="https://www.topgear.com/sites/default/files/2023/01/Dacia+Duster+-+Dynamic+(1).jpg?w=1784&h=1004" alt="Renault Duster" />
+        </div>
+        <div class="auto-card-overlay"></div>
+        <div class="auto-card-body">
+          <p class="auto-badge">Available</p>
+          <div class="auto-name">RENAULT DUSTER</div>
+          <div class="auto-year">2022 · Nafta</div>
+          <div class="auto-specs">
+            <div class="auto-spec">Mileage<span>25.000</span></div>
+            <div class="auto-spec">Gearbox<span>Manual</span></div>
+          </div>
+          <div class="auto-specs-tech">
+            <div class="tech-row"><span class="tech-label">Engine</span><span class="tech-val">1.6 16V · 114 CV</span></div>
+            <div class="tech-row"><span class="tech-label">Model</span><span class="tech-val">Duster Intens</span></div>
+            <div class="tech-row"><span class="tech-label">Fuel</span><span class="tech-val fuel nafta">⬤ Gasoline</span></div>
+            <div class="tech-row"><span class="tech-label">Tank</span><span class="tech-val">50 L</span></div>
+            <div class="tech-row"><span class="tech-label">Length</span><span class="tech-val">4.315 m</span></div>
+            <div class="tech-row"><span class="tech-label">Width</span><span class="tech-val">1.822 m</span></div>
+          </div>
+          <div class="auto-footer">
+            <div>
+              <div class="auto-price-label">Price</div>
+              <div class="auto-price">$15.900.000</div>
+            </div>
+            <button class="auto-btn" onclick="scrollToContact()">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUTO 6 -->
+      <div class="auto-card reveal">
+        <div class="auto-card-img-placeholder">
+          <!-- IMAGEN AUTO 6: reemplazá el src -->
+          <img class="auto-card-img" src="https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/6/6/9/6690b1b97e_50204113_2214687-2uhslenmij.jpg" alt="Peugeot 208" />
+        </div>
+        <div class="auto-card-overlay"></div>
+        <div class="auto-card-body">
+          <p class="auto-badge">Available</p>
+          <div class="auto-name">PEUGEOT 208</div>
+          <div class="auto-year">2023 · Nafta</div>
+          <div class="auto-specs">
+            <div class="auto-spec">Mileage<span>12.000</span></div>
+            <div class="auto-spec">Gearbox<span>Manual</span></div>
+          </div>
+          <div class="auto-specs-tech">
+            <div class="tech-row"><span class="tech-label">Engine</span><span class="tech-val">1.2 PureTech · 100 CV</span></div>
+            <div class="tech-row"><span class="tech-label">Model</span><span class="tech-val">208 Allure Pack</span></div>
+            <div class="tech-row"><span class="tech-label">Fuel</span><span class="tech-val fuel nafta">⬤ Gasoline</span></div>
+            <div class="tech-row"><span class="tech-label">Tank</span><span class="tech-val">44 L</span></div>
+            <div class="tech-row"><span class="tech-label">Length</span><span class="tech-val">4.055 m</span></div>
+            <div class="tech-row"><span class="tech-label">Width</span><span class="tech-val">1.745 m</span></div>
+          </div>
+          <div class="auto-footer">
+            <div>
+              <div class="auto-price-label">Price</div>
+              <div class="auto-price">$14.700.000</div>
+            </div>
+            <button class="auto-btn" onclick="scrollToContact()">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- REPUESTOS -->
+  <section class="repuestos-section" id="repuestos">
+    <div class="repuestos-inner">
+      <div class="section-header reveal">
+        <div>
+          <p class="section-label">Parts &amp; Accessories</p>
+          <h2 class="section-title">SPARE<br>PARTS</h2>
+        </div>
+        <p class="section-sub">Genuine and compatible parts for the most popular models. Fast delivery and guaranteed quality.</p>
+      </div>
+
+      <!-- FILTROS -->
+      <div class="repuestos-filters reveal">
+        <div class="filter-group">
+          <span class="filter-label">Filter by Model</span>
+          <select class="filter-select" id="filter-model" onchange="filterParts()">
+            <option value="all">All Models</option>
+            <option value="vento">Volkswagen Vento</option>
+            <option value="corolla">Toyota Corolla</option>
+            <option value="cruze">Chevrolet Cruze</option>
+            <option value="ranger">Ford Ranger</option>
+            <option value="duster">Renault Duster</option>
+            <option value="208">Peugeot 208</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">Filter by Category</span>
+          <select class="filter-select" id="filter-cat" onchange="filterParts()">
+            <option value="all">All Categories</option>
+            <option value="engine">Engine</option>
+            <option value="wheels">Wheels &amp; Tires</option>
+            <option value="brakes">Brakes</option>
+            <option value="suspension">Suspension</option>
+            <option value="electrical">Electrical</option>
+            <option value="filters">Filters</option>
+          </select>
+        </div>
+        <button class="filter-btn" onclick="resetFilters()">↺ Reset</button>
+      </div>
+
+      <!-- GRID -->
+      <div class="repuestos-grid" id="partsGrid">
+
+        <div class="repuesto-card reveal" data-model="vento cruze corolla 208" data-cat="engine">
+          <span class="repuesto-icon">🔩</span>
+          <p class="repuesto-category">Engine</p>
+          <div class="repuesto-name">SPARK PLUGS SET</div>
+          <p class="repuesto-compat">Compatible with: <strong>VW Vento · Chevrolet Cruze · Toyota Corolla · Peugeot 208</strong></p>
+          <div class="repuesto-footer">
+            <div>
+              <div class="repuesto-price-label">Price</div>
+              <div class="repuesto-price">$18.500</div>
+            </div>
+            <span class="repuesto-stock">✔ In Stock</span>
+          </div>
+          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
+        </div>
+
+        <div class="repuesto-card reveal" data-model="ranger duster corolla" data-cat="wheels">
+          <span class="repuesto-icon">🛞</span>
+          <p class="repuesto-category">Wheels &amp; Tires</p>
+          <div class="repuesto-name">STEEL RIM 16"</div>
+          <p class="repuesto-compat">Compatible with: <strong>Ford Ranger · Renault Duster · Toyota Corolla</strong></p>
+          <div class="repuesto-footer">
+            <div>
+              <div class="repuesto-price-label">Price</div>
+              <div class="repuesto-price">$95.000</div>
+            </div>
+            <span class="repuesto-stock">✔ In Stock</span>
+          </div>
+          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
+        </div>
+
+        <div class="repuesto-card reveal" data-model="vento cruze corolla 208 duster" data-cat="engine">
+          <span class="repuesto-icon">🔧</span>
+          <p class="repuesto-category">Engine</p>
+          <div class="repuesto-name">PISTON &amp; CYLINDER KIT</div>
+          <p class="repuesto-compat">Compatible with: <strong>VW Vento · Chevrolet Cruze · Toyota Corolla · Peugeot 208 · Duster</strong></p>
+          <div class="repuesto-footer">
+            <div>
+              <div class="repuesto-price-label">Price</div>
+              <div class="repuesto-price">$210.000</div>
+            </div>
+            <span class="repuesto-stock low">⚠ Low Stock</span>
+          </div>
+          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
+        </div>
+
+        <div class="repuesto-card reveal" data-model="ranger duster cruze" data-cat="brakes">
+          <span class="repuesto-icon">🛑</span>
+          <p class="repuesto-category">Brakes</p>
+          <div class="repuesto-name">BRAKE DISC SET</div>
+          <p class="repuesto-compat">Compatible with: <strong>Ford Ranger · Renault Duster · Chevrolet Cruze</strong></p>
+          <div class="repuesto-footer">
+            <div>
+              <div class="repuesto-price-label">Price</div>
+              <div class="repuesto-price">$78.000</div>
+            </div>
+            <span class="repuesto-stock">✔ In Stock</span>
+          </div>
+          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
+        </div>
+
+        <div class="repuesto-card reveal" data-model="vento corolla 208" data-cat="suspension">
+          <span class="repuesto-icon">⚙️</span>
+          <p class="repuesto-category">Suspension</p>
+          <div class="repuesto-name">FRONT SHOCK ABSORBER</div>
+          <p class="repuesto-compat">Compatible with: <strong>VW Vento · Toyota Corolla · Peugeot 208</strong></p>
+          <div class="repuesto-footer">
+            <div>
+              <div class="repuesto-price-label">Price</div>
+              <div class="repuesto-price">$145.000</div>
+            </div>
+            <span class="repuesto-stock">✔ In Stock</span>
+          </div>
+          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
+        </div>
+
+        <div class="repuesto-card reveal" data-model="ranger duster cruze vento corolla 208" data-cat="filters">
+          <span class="repuesto-icon">🌀</span>
+          <p class="repuesto-category">Filters</p>
+          <div class="repuesto-name">OIL FILTER</div>
+          <p class="repuesto-compat">Compatible with: <strong>All Models</strong></p>
+          <div class="repuesto-footer">
+            <div>
+              <div class="repuesto-price-label">Price</div>
+              <div class="repuesto-price">$12.000</div>
+            </div>
+            <span class="repuesto-stock">✔ In Stock</span>
+          </div>
+          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
+        </div>
+
+        <div class="repuesto-card reveal" data-model="ranger duster cruze vento corolla 208" data-cat="filters">
+          <span class="repuesto-icon">💨</span>
+          <p class="repuesto-category">Filters</p>
+          <div class="repuesto-name">AIR FILTER</div>
+          <p class="repuesto-compat">Compatible with: <strong>All Models</strong></p>
+          <div class="repuesto-footer">
+            <div>
+              <div class="repuesto-price-label">Price</div>
+              <div class="repuesto-price">$9.500</div>
+            </div>
+            <span class="repuesto-stock">✔ In Stock</span>
+          </div>
+          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
+        </div>
+
+        <div class="repuesto-card reveal" data-model="vento cruze corolla 208" data-cat="electrical">
+          <span class="repuesto-icon">🔋</span>
+          <p class="repuesto-category">Electrical</p>
+          <div class="repuesto-name">12V CAR BATTERY</div>
+          <p class="repuesto-compat">Compatible with: <strong>VW Vento · Chevrolet Cruze · Toyota Corolla · Peugeot 208</strong></p>
+          <div class="repuesto-footer">
+            <div>
+              <div class="repuesto-price-label">Price</div>
+              <div class="repuesto-price">$85.000</div>
+            </div>
+            <span class="repuesto-stock">✔ In Stock</span>
+          </div>
+          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
+        </div>
+
+        <div class="repuesto-card reveal" data-model="ranger duster" data-cat="wheels">
+          <span class="repuesto-icon">🛞</span>
+          <p class="repuesto-category">Wheels &amp; Tires</p>
+          <div class="repuesto-name">ALL-TERRAIN TIRE 265/70</div>
+          <p class="repuesto-compat">Compatible with: <strong>Ford Ranger · Renault Duster</strong></p>
+          <div class="repuesto-footer">
+            <div>
+              <div class="repuesto-price-label">Price</div>
+              <div class="repuesto-price">$180.000</div>
+            </div>
+            <span class="repuesto-stock low">⚠ Low Stock</span>
+          </div>
+          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
+        </div>
+
+        <div class="repuesto-card reveal" data-model="vento corolla cruze 208 duster ranger" data-cat="brakes">
+          <span class="repuesto-icon">🛑</span>
+          <p class="repuesto-category">Brakes</p>
+          <div class="repuesto-name">BRAKE PAD SET</div>
+          <p class="repuesto-compat">Compatible with: <strong>All Models</strong></p>
+          <div class="repuesto-footer">
+            <div>
+              <div class="repuesto-price-label">Price</div>
+              <div class="repuesto-price">$42.000</div>
+            </div>
+            <span class="repuesto-stock">✔ In Stock</span>
+          </div>
+          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
+        </div>
+
+        <div class="repuesto-card reveal" data-model="vento cruze corolla 208" data-cat="suspension">
+          <span class="repuesto-icon">⚙️</span>
+          <p class="repuesto-category">Suspension</p>
+          <div class="repuesto-name">REAR SPRING KIT</div>
+          <p class="repuesto-compat">Compatible with: <strong>VW Vento · Chevrolet Cruze · Toyota Corolla · Peugeot 208</strong></p>
+          <div class="repuesto-footer">
+            <div>
+              <div class="repuesto-price-label">Price</div>
+              <div class="repuesto-price">$98.000</div>
+            </div>
+            <span class="repuesto-stock">✔ In Stock</span>
+          </div>
+          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
+        </div>
+
+        <div class="repuesto-card reveal" data-model="ranger cruze duster" data-cat="engine">
+          <span class="repuesto-icon">🔧</span>
+          <p class="repuesto-category">Engine</p>
+          <div class="repuesto-name">TIMING BELT KIT</div>
+          <p class="repuesto-compat">Compatible with: <strong>Ford Ranger · Chevrolet Cruze · Renault Duster</strong></p>
+          <div class="repuesto-footer">
+            <div>
+              <div class="repuesto-price-label">Price</div>
+              <div class="repuesto-price">$135.000</div>
+            </div>
+            <span class="repuesto-stock">✔ In Stock</span>
+          </div>
+          <button class="repuesto-btn" onclick="scrollToContacto()">Request Part</button>
+        </div>
+
+        <div class="no-results" id="noResults">No parts found for the selected filters.</div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="contacto" id="contacto">
+    <div class="contacto-inner reveal">
+      <p class="contacto-label">Let's Talk</p>
+      <h2 class="contacto-title">INTERESTED IN<br>A CAR?</h2>
+      <p class="contacto-text">
+        Leave us your details and we'll get back to you shortly. No commitment, no pressure.<br>That's how we work at Automotores Martino.
+      </p>
+      <form class="contacto-form" id="contact-form">
+        <input class="contacto-input" type="text" name="name" placeholder="Your name" required />
+        <input class="contacto-input" type="tel" name="phone" placeholder="Your phone" required />
+        <input class="contacto-input full" type="email" name="email" placeholder="Your email" required />
+        <input class="contacto-input full" type="text" name="interest" placeholder="Which car are you interested in?" required />
+        <button class="contacto-submit full" type="submit">Send Inquiry →</button>
+      </form>
+      <p class="contacto-status" id="contact-status">Your email app should open with a prefilled inquiry draft. If it does not, contact us directly at automotoresmartino@gmail.com.</p>
+      <a href="mailto:automotoresmartino@gmail.com" class="contacto-email-link">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;flex-shrink:0"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        automotoresmartino@gmail.com
+      </a>
+    </div>
+  </section>
+
+
+  <!-- CHAT WIDGET -->
+  <div id="chat-widget">
+    <div id="chat-box" class="hidden">
+      <div id="chat-header">
+        <div class="chat-header-left">
+          <div class="chat-avatar">🚗</div>
+          <div class="chat-header-info">
+            <div class="chat-header-name">MARTINO ASSISTANT</div>
+            <div class="chat-header-status"><span class="status-dot"></span> Online · Ready to help</div>
+          </div>
+        </div>
+        <button class="chat-close" onclick="toggleChat()">✕</button>
+      </div>
+      <div id="chat-messages"></div>
+      <div class="chat-note">AI replies are powered server-side for security.</div>
+      <div class="chat-suggestions" id="chat-suggestions">
+        <button class="chat-suggestion" onclick="sendSuggestion('What cars do you have available?')">Available cars</button>
+        <button class="chat-suggestion" onclick="sendSuggestion('Do you have financing options?')">Financing</button>
+        <button class="chat-suggestion" onclick="sendSuggestion('What spare parts do you sell?')">Spare parts</button>
+        <button class="chat-suggestion" onclick="sendSuggestion('How can I contact you?')">Contact</button>
+      </div>
+      <div id="chat-input-area">
+        <input id="chat-input" type="text" placeholder="Write your question..." />
+        <button id="chat-send" onclick="sendMessage()">➤</button>
+      </div>
+    </div>
+    <button id="chat-toggle" onclick="toggleChat()" title="Virtual Assistant">💬</button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">AUTOMOTORES <span>MARTINO</span></div>
+    <div class="footer-copy">© 2024 Automotores Martino · Córdoba, Argentina</div>
+    <div class="footer-links">
+      <a href="#nosotros">About Us</a>
+      <a href="#stock">Stock</a>
+      <a href="#contacto">Contact</a>
+    </div>
+    <div class="footer-social">
+      <a href="mailto:automotoresmartino@gmail.com" class="social-link" title="Gmail">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/martinondmotors/" target="_blank" class="social-link" title="Instagram">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+      <a href="https://tiktok.com/@automotoresmartino" target="_blank" class="social-link" title="TikTok">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.73a4.85 4.85 0 01-1.01-.04z"/></svg>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    document.addEventListener('mousemove', function(e) {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      setTimeout(function() {
+        ring.style.left = e.clientX + 'px';
+        ring.style.top = e.clientY + 'px';
+      }, 60);
+    });
+    document.querySelectorAll('a,button,.auto-card').forEach(function(el) {
+      el.addEventListener('mouseenter', function() {
+        cursor.style.width = '20px'; cursor.style.height = '20px';
+        ring.style.width = '52px'; ring.style.height = '52px';
+        ring.style.borderColor = 'rgba(192,0,10,0.8)';
+      });
+      el.addEventListener('mouseleave', function() {
+        cursor.style.width = '12px'; cursor.style.height = '12px';
+        ring.style.width = '36px'; ring.style.height = '36px';
+        ring.style.borderColor = 'rgba(192,0,10,0.5)';
+      });
+    });
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(function(r) { observer.observe(r); });
+
+    // Scroll to contact
+    function scrollToContacto() {
+      document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Parts filter
+    function filterParts() {
+      const model = document.getElementById('filter-model').value;
+      const cat = document.getElementById('filter-cat').value;
+      const cards = document.querySelectorAll('.repuesto-card');
+      let visible = 0;
+      cards.forEach(function(card) {
+        const cardModels = card.dataset.model || '';
+        const cardCat = card.dataset.cat || '';
+        const modelMatch = model === 'all' || cardModels.includes(model);
+        const catMatch = cat === 'all' || cardCat === cat;
+        if (modelMatch && catMatch) {
+          card.style.display = '';
+          visible++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+    }
+
+    function resetFilters() {
+      document.getElementById('filter-model').value = 'all';
+      document.getElementById('filter-cat').value = 'all';
+      filterParts();
+    }
+
+    // Contact form draft helper for Vercel MVP
+    var contactForm = document.getElementById('contact-form');
+    var contactStatus = document.getElementById('contact-status');
+    if (contactForm && contactStatus) {
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var formData = new FormData(contactForm);
+        var subject = 'Vehicle inquiry from ' + (formData.get('name') || 'website visitor');
+        var body = [
+          'Name: ' + (formData.get('name') || ''),
+          'Phone: ' + (formData.get('phone') || ''),
+          'Email: ' + (formData.get('email') || ''),
+          'Interest: ' + (formData.get('interest') || '')
+        ].join('\n');
+        window.location.href = 'mailto:automotoresmartino@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+        contactStatus.classList.add('is-visible');
+      });
+    }
+
+    // ---- CHAT ----
+    var CHAT_ENDPOINT = '/api/martino-assistant';
+    var chatHistory = [];
+    var chatOpen = false;
+    var chatInitialized = false;
+    var chatPending = false;
+    var chatInput = document.getElementById('chat-input');
+    var chatSend = document.getElementById('chat-send');
+    var chatSuggestions = document.getElementById('chat-suggestions');
+
+    function toggleChat() {
+      chatOpen = !chatOpen;
+      var box = document.getElementById('chat-box');
+      var toggle = document.getElementById('chat-toggle');
+      if (chatOpen) {
+        box.classList.remove('hidden');
+        toggle.textContent = '✕';
+        if (!chatInitialized) {
+          chatInitialized = true;
+          setTimeout(function() {
+            appendMessage('bot', "Hello! Welcome to Automotores Martino.\nI'm your AI assistant. Ask me about vehicles, financing, spare parts, or contact details.");
+          }, 400);
+        }
+        scrollMessages();
+      } else {
+        box.classList.add('hidden');
+        toggle.textContent = '💬';
+      }
+    }
+
+    function getTime() {
+      return new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    }
+
+    function appendMessage(role, text) {
+      var msgs = document.getElementById('chat-messages');
+      var div = document.createElement('div');
+      div.className = 'msg ' + role;
+
+      var bubble = document.createElement('div');
+      bubble.className = 'msg-bubble';
+      bubble.textContent = text;
+
+      var time = document.createElement('span');
+      time.className = 'msg-time';
+      time.textContent = getTime();
+
+      div.appendChild(bubble);
+      div.appendChild(time);
+      msgs.appendChild(div);
+      scrollMessages();
+    }
+
+    function showTyping() {
+      var msgs = document.getElementById('chat-messages');
+      var div = document.createElement('div');
+      div.className = 'msg bot';
+      div.id = 'typing-msg';
+      div.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
+      msgs.appendChild(div);
+      scrollMessages();
+    }
+
+    function removeTyping() {
+      var t = document.getElementById('typing-msg');
+      if (t) t.remove();
+    }
+
+    function scrollMessages() {
+      var msgs = document.getElementById('chat-messages');
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function setChatPending(isPending) {
+      chatPending = isPending;
+      chatInput.disabled = isPending;
+      chatSend.disabled = isPending;
+    }
+
+    async function sendMessage(prefilledText) {
+      if (chatPending) return;
+      var text = (prefilledText || chatInput.value).trim();
+      if (!text) return;
+      chatInput.value = '';
+      if (chatSuggestions) chatSuggestions.style.display = 'none';
+
+      appendMessage('user', text);
+      chatHistory.push({ role: 'user', text: text });
+      setChatPending(true);
+      showTyping();
+
+      try {
+        var response = await fetch(CHAT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: text,
+            history: chatHistory.slice(-8)
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Assistant request failed');
+        }
+
+        var payload = await response.json();
+        removeTyping();
+        appendMessage('bot', payload.reply || "I'm sorry, I couldn't generate a reply right now.");
+        chatHistory.push({ role: 'assistant', text: payload.reply || '' });
+      } catch (error) {
+        removeTyping();
+        appendMessage('bot', "I'm having trouble responding right now. Please try again in a moment or contact us at automotoresmartino@gmail.com.");
+      } finally {
+        setChatPending(false);
+        chatInput.focus();
+      }
+    }
+
+    function sendSuggestion(text) {
+      sendMessage(text);
+    }
+
+    document.getElementById('chat-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') sendMessage();
+    });
+  </script>
+</body>
+</html>
